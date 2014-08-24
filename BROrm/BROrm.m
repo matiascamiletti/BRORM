@@ -56,6 +56,7 @@ static BOOL _logging = NO;
         _orders = [NSMutableArray array];
         _dirtyFields = [NSMutableArray array];
         _groups = [NSMutableArray array];
+        _data = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -377,7 +378,9 @@ static BOOL _logging = NO;
     return [_data objectForKey:key];
 }
 - (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key{
-    if([[_data objectForKey:key] isEqual:obj]) return;
+    if([[_data objectForKey:key] isEqual:obj]){
+        return;
+    }
     [_data setObject:obj forKey:key];
     if(![_dirtyFields containsObject:key])
         [_dirtyFields addObject:key];
@@ -539,6 +542,7 @@ static BOOL _logging = NO;
     }
     query = [query stringByAppendingString:[fields componentsJoinedByString:@", "]];
     query = [query stringByAppendingString:[NSString stringWithFormat:@" WHERE %@ = ?",_idColumn]];
+    if(_logging) NSLog(@"[QUERY UPDATE:] %@ ",query);
     return query;
 }
 - (NSString*)buildInsert:(NSDictionary*)data{

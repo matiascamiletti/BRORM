@@ -84,10 +84,10 @@
     
     BROrmWrapper *w = [BROrmWrapper factoryForClassName:className andDatabaseQueue:_orm.databaseQueue];
     [w join:jointable withConstraints:@[@{
-                                               @"type":@"=",
-                                               @"column":[NSString stringWithFormat:@"%@.%@",jointable,foreignKey],
-                                               @"value":[NSString stringWithFormat:@"%@.%@",[joinclass getTableName],[joinclass idColumn]],
-                                               @"trust_value":@(1)}] andAlias:jointable];
+                                            @"type":@"=",
+                                            @"column":[NSString stringWithFormat:@"%@.%@",jointable,foreignKey],
+                                            @"value":[NSString stringWithFormat:@"%@.%@",[joinclass getTableName],[joinclass idColumn]],
+                                            @"trust_value":@(1)}] andAlias:jointable];
     [w whereEquals:[NSString stringWithFormat:@"%@.%@",jointable,baseKey] value:self[[[self class] idColumn]]];
     return w;
 }
